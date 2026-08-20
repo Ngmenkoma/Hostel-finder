@@ -1,0 +1,608 @@
+/* ============================================
+   GCTU Hostel Finder — Design Tokens
+   ============================================ */
+:root {
+  --ink: #16213A;
+  --ink-soft: #2A3958;
+  --gold: #E8A33D;
+  --gold-deep: #C6842A;
+  --leaf: #2F9E68;
+  --leaf-soft: #E6F5EC;
+  --coral: #E85D4E;
+  --coral-soft: #FCE9E6;
+  --cloud: #EEF1F6;
+  --white: #FFFFFF;
+  --slate: #5B6478;
+  --slate-light: #9AA3B5;
+  --line: #DCE1EB;
+
+  --font-display: "Sora", "Segoe UI", sans-serif;
+  --font-body: "Inter", "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", "Consolas", monospace;
+
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --shadow-card: 0 2px 10px rgba(22, 33, 58, 0.08);
+  --shadow-lift: 0 8px 24px rgba(22, 33, 58, 0.14);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background: var(--cloud);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  color: var(--ink);
+  margin: 0;
+}
+
+a { text-decoration: none; color: inherit; }
+button { font-family: var(--font-body); cursor: pointer; }
+
+/* ============================================
+   App Shell — mobile-first, centered "phone" frame
+   ============================================ */
+.app-shell {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: var(--cloud);
+  position: relative;
+  padding-bottom: 84px; /* room for bottom nav */
+}
+
+/* Header */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--ink);
+  color: var(--white);
+  padding: 18px 20px 20px;
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+}
+
+.app-header .brand {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.app-header .brand h1 {
+  font-size: 19px;
+  color: var(--white);
+  letter-spacing: -0.02em;
+}
+
+.app-header .brand h1 span {
+  color: var(--gold);
+}
+
+.icon-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+}
+
+.search-bar {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 11px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-bar input {
+  border: none;
+  outline: none;
+  flex: 1;
+  font-size: 14px;
+  font-family: var(--font-body);
+  color: var(--ink);
+}
+
+.search-bar svg { flex-shrink: 0; color: var(--slate-light); }
+
+/* Page content */
+.page-content { padding: 18px 16px 8px; }
+
+.section-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 4px 2px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.section-title .count {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--slate);
+  font-weight: 400;
+}
+
+/* ============================================
+   Hostel Card — the signature element lives here
+   ============================================ */
+.hostel-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  margin-bottom: 16px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.hostel-card:active { transform: scale(0.98); }
+
+.hostel-card .media {
+  position: relative;
+  height: 150px;
+  background: linear-gradient(135deg, #2A3958, #16213A);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hostel-card .media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hostel-card .media .placeholder-icon {
+  color: rgba(255,255,255,0.25);
+}
+
+/* Distance pill — signature element: walking time, not just km */
+.distance-pill {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(22, 33, 58, 0.85);
+  backdrop-filter: blur(4px);
+  color: var(--white);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 5px 10px 5px 8px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.availability-pill {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+.availability-pill.open { background: var(--leaf-soft); color: var(--leaf); }
+.availability-pill.full { background: var(--coral-soft); color: var(--coral); }
+
+.hostel-card .body { padding: 14px 16px 16px; }
+
+.hostel-card .name {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+
+.hostel-card .location {
+  font-size: 12.5px;
+  color: var(--slate);
+  margin-bottom: 10px;
+}
+
+.hostel-card .amenities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.amenity-tag {
+  font-size: 10.5px;
+  background: var(--cloud);
+  color: var(--slate);
+  padding: 3px 8px;
+  border-radius: 8px;
+}
+
+.hostel-card .footer-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.price-from {
+  font-size: 10.5px;
+  color: var(--slate-light);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.price-amount {
+  font-family: var(--font-mono);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.price-amount .unit { font-size: 11px; font-weight: 400; color: var(--slate); }
+
+/* ============================================
+   Buttons
+   ============================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  border-radius: 12px;
+  font-size: 14.5px;
+  font-weight: 600;
+  padding: 13px 20px;
+  transition: transform 0.12s ease, opacity 0.12s ease;
+}
+
+.btn:active { transform: scale(0.97); }
+
+.btn-primary { background: var(--gold); color: var(--ink); }
+.btn-primary:hover { background: var(--gold-deep); }
+.btn-block { width: 100%; }
+.btn-outline { background: transparent; border: 1.5px solid var(--line); color: var(--ink); }
+.btn-ghost { background: var(--cloud); color: var(--ink); }
+.btn-danger { background: var(--coral-soft); color: var(--coral); }
+.btn-sm { padding: 9px 14px; font-size: 13px; border-radius: 10px; }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ============================================
+   Forms
+   ============================================ */
+.form-group { margin-bottom: 16px; }
+
+.form-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  margin-bottom: 7px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1.5px solid var(--line);
+  font-size: 14.5px;
+  font-family: var(--font-body);
+  background: var(--white);
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus { border-color: var(--gold); }
+
+.form-group textarea { resize: vertical; min-height: 80px; }
+
+.form-hint { font-size: 12px; color: var(--slate-light); margin-top: 5px; }
+
+.role-toggle {
+  display: flex;
+  background: var(--cloud);
+  border-radius: 12px;
+  padding: 4px;
+  margin-bottom: 20px;
+}
+
+.role-toggle button {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  background: transparent;
+  border-radius: 9px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--slate);
+}
+
+.role-toggle button.active { background: var(--white); color: var(--ink); box-shadow: var(--shadow-card); }
+
+/* ============================================
+   Bottom Navigation
+   ============================================ */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  background: var(--white);
+  border-top: 1px solid var(--line);
+  display: flex;
+  padding: 10px 8px calc(10px + env(safe-area-inset-bottom));
+  z-index: 20;
+}
+
+.nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 0;
+  color: var(--slate-light);
+  font-size: 10.5px;
+  font-weight: 600;
+}
+
+.nav-item.active { color: var(--ink); }
+.nav-item.active svg { color: var(--gold-deep); }
+
+/* ============================================
+   Auth pages
+   ============================================ */
+.auth-shell {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: var(--white);
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-hero {
+  background: var(--ink);
+  padding: 48px 24px 32px;
+  border-radius: 0 0 28px 28px;
+  color: var(--white);
+}
+
+.auth-hero .eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--gold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.auth-hero h1 { font-size: 26px; color: var(--white); line-height: 1.25; }
+
+.auth-body { padding: 28px 24px; flex: 1; }
+
+.auth-footer-link {
+  text-align: center;
+  font-size: 13.5px;
+  color: var(--slate);
+  margin-top: 18px;
+}
+
+.auth-footer-link a { color: var(--gold-deep); font-weight: 600; }
+
+/* ============================================
+   Hostel Detail page
+   ============================================ */
+.detail-hero {
+  height: 220px;
+  background: linear-gradient(135deg, #2A3958, #16213A);
+  position: relative;
+}
+
+.detail-hero img { width: 100%; height: 100%; object-fit: cover; }
+
+.back-btn {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink);
+}
+
+.detail-body {
+  background: var(--white);
+  border-radius: 24px 24px 0 0;
+  margin-top: -20px;
+  position: relative;
+  padding: 22px 20px 20px;
+}
+
+.detail-body h2 { font-size: 21px; margin-bottom: 4px; }
+
+.detail-meta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--slate);
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+
+.detail-meta .meta-item { display: flex; align-items: center; gap: 5px; }
+
+.detail-section { margin-bottom: 22px; }
+
+.detail-section h3 {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--slate);
+  margin-bottom: 10px;
+}
+
+.detail-section p { font-size: 14px; line-height: 1.6; color: var(--ink-soft); margin: 0; }
+
+.room-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px;
+  background: var(--cloud);
+  border-radius: 14px;
+  margin-bottom: 10px;
+}
+
+.room-row .room-type { font-size: 14px; font-weight: 700; margin-bottom: 3px; }
+.room-row .room-slots { font-size: 12px; color: var(--slate); }
+.room-row .room-price { font-family: var(--font-mono); font-weight: 700; font-size: 15px; text-align: right; }
+
+/* ============================================
+   Dashboard
+   ============================================ */
+.stat-row { display: flex; gap: 10px; margin-bottom: 20px; }
+
+.stat-card {
+  flex: 1;
+  background: var(--white);
+  border-radius: 14px;
+  padding: 14px;
+  box-shadow: var(--shadow-card);
+}
+
+.stat-card .value { font-family: var(--font-mono); font-size: 22px; font-weight: 700; color: var(--ink); }
+.stat-card .label { font-size: 11px; color: var(--slate); margin-top: 2px; }
+
+.list-item {
+  background: var(--white);
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 10px;
+  box-shadow: var(--shadow-card);
+}
+
+.list-item .row-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.status-badge {
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  text-transform: capitalize;
+}
+
+.status-badge.pending { background: #FDF3E0; color: var(--gold-deep); }
+.status-badge.confirmed { background: var(--leaf-soft); color: var(--leaf); }
+.status-badge.cancelled { background: var(--coral-soft); color: var(--coral); }
+.status-badge.completed { background: var(--cloud); color: var(--slate); }
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 50px 20px;
+  color: var(--slate);
+}
+
+.empty-state svg { color: var(--slate-light); margin-bottom: 14px; }
+.empty-state p { font-size: 14px; margin: 0; }
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--ink);
+  color: var(--white);
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-size: 13.5px;
+  font-weight: 500;
+  opacity: 0;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  z-index: 100;
+  max-width: 90%;
+  text-align: center;
+}
+
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.toast.error { background: var(--coral); }
+.toast.success { background: var(--leaf); }
+
+/* Skeleton loading */
+.skeleton {
+  background: linear-gradient(90deg, var(--line) 25%, #E8ECF3 50%, var(--line) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+  border-radius: var(--radius-lg);
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.skeleton-card { height: 240px; margin-bottom: 16px; }
+
+/* Modal (booking confirm) */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(22, 33, 58, 0.5);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 50;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.modal-overlay.show { opacity: 1; pointer-events: auto; }
+
+.modal-sheet {
+  background: var(--white);
+  width: 100%;
+  max-width: 480px;
+  border-radius: 24px 24px 0 0;
+  padding: 24px 20px calc(24px + env(safe-area-inset-bottom));
+  transform: translateY(20px);
+  transition: transform 0.25s ease;
+}
+
+.modal-overlay.show .modal-sheet { transform: translateY(0); }
+
+.modal-sheet h3 { font-size: 18px; margin-bottom: 16px; }
